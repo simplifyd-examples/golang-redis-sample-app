@@ -26,6 +26,7 @@ func main() {
 	mux.HandleFunc("/album", showAlbum)
 	mux.HandleFunc("/like", addLike)
 	mux.HandleFunc("/popular", listPopular)
+	mux.HandleFunc("/albums", addAlbum)
 	log.Println(fmt.Sprintf("Listening on :%s...", os.Getenv("PORT")))
 	http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), mux)
 }
