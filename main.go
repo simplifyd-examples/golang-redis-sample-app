@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/gomodule/redigo/redis"
@@ -19,7 +18,7 @@ func main() {
 		MaxIdle:     10,
 		IdleTimeout: 240 * time.Second,
 		Dial: func() (redis.Conn, error) {
-			return redis.Dial("tcp", "localhost:6379")
+			return redis.Dial("tcp", fmt.Sprintf("%s:%s", os.Getenv("REDIS_REDISDB2_URL"), os.Getenv("REDIS_REDISDB2_PORT")))
 		},
 	}
 
@@ -46,12 +45,6 @@ func showAlbum(w http.ResponseWriter, r *http.Request) {
 	// if it's missing.
 	id := r.URL.Query().Get("id")
 	if id == "" {
-		http.Error(w, http.StatusText(400), 400)
-		return
-	}
-	// Validate that the id is a valid integer by trying to convert it,
-	// returning a 400 Bad Request response if the conversion fails.
-	if _, err := strconv.Atoi(id); err != nil {
 		http.Error(w, http.StatusText(400), 400)
 		return
 	}
@@ -88,12 +81,6 @@ func addLike(w http.ResponseWriter, r *http.Request) {
 	// Bad Request response if it's missing.
 	id := r.PostFormValue("id")
 	if id == "" {
-		http.Error(w, http.StatusText(400), 400)
-		return
-	}
-	// Validate that the id is a valid integer by trying to convert it,
-	// returning a 400 Bad Request response if the conversion fails.
-	if _, err := strconv.Atoi(id); err != nil {
 		http.Error(w, http.StatusText(400), 400)
 		return
 	}
