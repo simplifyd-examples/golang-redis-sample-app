@@ -59,6 +59,7 @@ func showAlbum(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	} else if err != nil {
+		log.Println(err)
 		http.Error(w, http.StatusText(500), 500)
 		return
 	}
@@ -95,6 +96,7 @@ func addLike(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	} else if err != nil {
+		log.Println(err)
 		http.Error(w, http.StatusText(500), 500)
 		return
 	}
@@ -117,6 +119,7 @@ func listPopular(w http.ResponseWriter, r *http.Request) {
 	// Server Error response if there's any error.
 	albums, err := FindTopThree()
 	if err != nil {
+		log.Println(err)
 		http.Error(w, http.StatusText(500), 500)
 		return
 	}
@@ -140,6 +143,7 @@ func addAlbum(w http.ResponseWriter, r *http.Request) {
 	var album Album
 	err := json.NewDecoder(r.Body).Decode(&album)
 	if err != nil {
+		log.Println(err)
 		http.Error(w, http.StatusText(400), 400)
 		return
 	}
@@ -153,6 +157,7 @@ func addAlbum(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	} else if err != nil {
+		log.Println(err)
 		http.Error(w, http.StatusText(500), 500)
 		return
 	}
