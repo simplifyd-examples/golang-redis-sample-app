@@ -126,6 +126,7 @@ func listPopular(w http.ResponseWriter, r *http.Request) {
 
 	// Loop through the 3 albums, writing the details as a plain text list
 	// to the client.
+	log.Println(albums)
 	for i, ab := range albums {
 		fmt.Fprintf(w, "%d) %s by %s: £%.2f [%d likes] \n", i+1, ab.Title, ab.Artist, ab.Price, ab.Likes)
 	}
